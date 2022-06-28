@@ -1,14 +1,21 @@
-function [para, Z] = mmda_sldr(X, labels, dim)
+function [para, Z] = whmmda_sldr(X, labels, dim)
 
 % download CVX toolbox from below link:
 % http://web.cvxr.com/cvx/cvx-w64.zip
 
-% MMDA method for supervised linear dimension reduction (LDR).
-% Bian, Wei, and Dacheng Tao.
-% "Max-min distance analysis by using sequential SDP relaxation for dimension reduction."
-% IEEE Transactions on Pattern Analysis and Machine Intelligence 33, no. 5 (2010): 1037-1050.
+% Heteroscedastic MMDA method for supervised linear dimension reduction (LDR).
 
-%[para,W] = mmda_sldr(X, labels, dim) , where dim values by default is Number of classes: C
+% Su, Bing, Xiaoqing Ding, Changsong Liu, and Ying Wu.
+% "Heteroscedastic max-min distance analysis."
+% In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 4539-4547. 2015.
+
+% Su, Bing, Xiaoqing Ding, Changsong Liu, and Ying Wu. 
+% "Heteroscedastic Max–Min distance analysis for dimensionality reduction." 
+% IEEE Transactions on Image Processing 27, no. 8 (2018): 4052-4065.
+
+
+% Whitened HMMDA
+%[para,W] = whmmda_sldr(X, labels, dim) , where dim values by default is Number of classes: C
 % Input:
 %    X:      n x d matrix of original feature samples
 %            d --- dimensionality of original features
@@ -34,51 +41,58 @@ mb = mean(X,'omitnan');
 X = X - mb;
 
 Sw = 0;
-SB = 0;
 for k = 1:num_classes
 
     Si{k}= cov( X(labels==classes_labels(k),:) ,1, 'omitrows' );
     M(k,:) = mean(X(labels==classes_labels(k),:),'omitnan');
     p(k) = sum(labels==classes_labels(k))/length(labels);
     Sw = Sw + p(k)*Si{k};
-    SB = SB + p(k)*M(k,:)' * M(k,:);
 
 end
 
-
+Sw_inv = inv(Sw);
 Sw_sqrt = (Sw)^0.5;
 Sw_sqrtinv = inv(Sw_sqrt);
 
 % apply the whitening preprocessing
 % X = (Sw_sqrtinv * X' )'; % both are equivalent
-X_data = X * Sw_sqrtinv ;
 X_org = X;
 
-for k = 1:num_classes
-    M(k,:) = mean(X_data(labels==classes_labels(k),:),'omitnan');
-end
+
 
 for i=1:num_classes
     for j=i+1:num_classes
+        p_i = p(i)/(p(i)+p(j));
+        p_j = p(j)/(p(i)+p(j));
+
         m_i = M(i,:)';
         m_j = M(j,:)';
-        Dij = (m_i-m_j)*(m_i-m_j)';
+
+        Sij = p_i*Si{i} + p_j*Si{j};
+        wSijw = Sw_sqrtinv*Sij*Sw_sqrtinv;
+        wSiw = Sw_sqrtinv*Si{i}*Sw_sqrtinv;
+        wSjw = Sw_sqrtinv*Si{j}*Sw_sqrtinv;
+        wmij = Sw_sqrtinv*(m_i-m_j);
+        % pairwise Chernoff distance in the latent subspace (whitening transformation)
+        Dij = (wSijw^-0.5 *wmij)*(wmij'*wSijw^-0.5)+ 1/(p_i*p_j)*(logm(wSijw)-p_i*logm(wSiw)-p_j*logm(wSjw));
+
         Aij = Dij/(p(i)*p(j)+10^-10);
         A{i,j} = Aij;
+
     end
 end
 
 
 
 %###############################
-% global SDP relaxation of MMDA
+% global SDP relaxation of HMMDA
 %###############################
 
 I = eye(d);
 %=======================================================
 cvx_begin sdp
 
-variable X(d,d) hermitian
+variable X(d,d) symmetric
 variable t
 minimize -t
 subject to
@@ -154,6 +168,7 @@ Z = X_org*W;
 
 para.W = W;
 para.mb = mb;
-para.model = 'mmda';
+para.Sw_sqrtinv = Sw_sqrtinv;
+para.model = 'whmmda';
 
 end

@@ -1,20 +1,23 @@
 # SLDR
-A MATLAB toolbox for supervised linear dimension reduction (SLDR) including LDA, HLDA and MMDA
+A MATLAB toolbox for supervised linear dimension reduction (SLDR) including LDA, HLDA, MMDA and WHMMDA
 
 Codes for the following papers:
 
-1. Max-min distance analysis by using sequential SDP relaxation for dimension reduction 
-2. Linear dimensionality reduction via a heteroscedastic extension of LDA: the Chernoff criterion
+1. Heteroscedastic Max–Min distance analysis for dimensionality reduction
+2. Heteroscedastic max-min distance analysis 
+3. Max-min distance analysis by using sequential SDP relaxation for dimension reduction 
+4. Linear dimensionality reduction via a heteroscedastic extension of LDA: the Chernoff criterion
 
 ## 1. Introduction.
 
-This package includes the prototype MATLAB codes for supervised linear dimension reduction (LDR).
+This package includes the prototype MATLAB codes for supervised linear dimension reduction (SLDR).
 
 The implemented methodes include: 
 
   1. Linear discriminant analysis (LDA)
   2. Heteroscedastic extension of LDA (HLDA)       
-  3. Max-min distance analysis (MMDA)  
+  3. Max-min distance analysis (MMDA) 
+  4. Heteroscedastic extension of MMDA (WHMMDA) 
      
 
 
