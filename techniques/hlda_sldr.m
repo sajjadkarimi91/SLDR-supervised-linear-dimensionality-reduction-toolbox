@@ -1,11 +1,11 @@
-function [para, Z] = hflda(X, labels, dim)
+function [para, Z] = hlda_sldr(X, labels, dim)
 
 % Heteroscedastic extension of LDA for supervised linear dimension reduction (LDR).
 % Duin, Robert PW, and Marco Loog.
 % "Linear dimensionality reduction via a heteroscedastic extension of LDA: the Chernoff criterion."
 % IEEE transactions on pattern analysis and machine intelligence 26, no. 6 (2004): 732-739.
 
-%[para,W]=hflda(X, labels, dim) , where dim values by default is Number of classes: C
+%[para,W] = hlda_sldr(X, labels, dim) , where dim values by default is Number of classes: C
 % Input:
 %    X:      n x d matrix of original feature samples
 %            d --- dimensionality of original features
@@ -14,8 +14,8 @@ function [para, Z] = hflda(X, labels, dim)
 %    dim:    ----- dimensionality of reduced space (default:C)
 %            dim has to be from 1<=dim<=d
 % Output:
-%    para:   output structure of mmda model for input of test_ldr.m function
-%    Z:      n x dim matrix of dimensionality reduced samples
+%    para:   output structure of hlda model for input of test_sldr.m function
+%    Z:      n x dim matrix of dimensionality reduced features
 
 
 classes_labels = unique(labels);

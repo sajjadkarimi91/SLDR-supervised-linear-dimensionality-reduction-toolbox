@@ -1,4 +1,4 @@
-function [para, Z] = flda(X, labels, dim)
+function [para, Z] = lda_sldr(X, labels, dim)
 
 % Linear discriminant analysis (LDA) is probably the most well-known approach to supervised linear
 % dimension reduction (LDR).
@@ -11,7 +11,7 @@ function [para, Z] = flda(X, labels, dim)
 % of Biological Classification,” J. Royal Statistical Soc., Series B, vol. 10,
 % pp. 159-203, 1948.
 
-%[para,W]=flda(X, labels, dim) , where dim values by default is Number of
+%[para,W] = lda_sldr(X, labels, dim) , where dim values by default is Number of
 %classes: C-1
 % Input:
 %    X:      n x d matrix of original feature samples
@@ -21,8 +21,8 @@ function [para, Z] = flda(X, labels, dim)
 %    dim:    ----- dimensionality of reduced space (default:C)
 %            dim has to be from 1<=dim<=d
 % Output:
-%    para:   output structure of mmda model for input of test_ldr.m function
-%    Z:      n x dim matrix of dimensionality reduced samples
+%    para:   output structure of lda model for input of test_sldr.m function
+%    Z:      n x dim matrix of dimensionality reduced features
 
 
 classes_labels = unique(labels);
@@ -71,5 +71,5 @@ Z = X*W;
 
 para.W = W;
 para.mb = mb;
-para.model = 'flda';
+para.model = 'lda';
 end

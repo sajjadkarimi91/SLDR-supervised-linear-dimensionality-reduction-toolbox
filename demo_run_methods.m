@@ -47,15 +47,15 @@ end
 %% dimension reduction
 
 
-[para_lda, Z_flda] = flda(train_data, train_label, dim); % Linear discriminant analysis (LDA)
+[para_lda, Z_lda] = lda_sldr(train_data, train_label, dim); % Linear discriminant analysis (LDA)
 
-[para_hlda, Z_hlda] = hflda(train_data, train_label, dim); % Heteroscedastic extension of LDA
+[para_hlda, Z_hlda] = hlda_sldr(train_data, train_label, dim); % Heteroscedastic extension of LDA
 try
-    [para_mmda, Z_mmda] = mmda(train_data, train_label, dim); % Max-min distance analysis
+    [para_mmda, Z_mmda] = mmda_sldr(train_data, train_label, dim); % Max-min distance analysis
 catch
     warning('please add cvx for MMDA')
     Z_mmda = Z_hlda;
-    disp('MMDA was replaced with HLDA to continue')
+    warning('MMDA was replaced with HLDA to continue this example')
 end
 
 %% some EDA to analysis the results
@@ -71,7 +71,7 @@ scatter(Z_hlda(:,1),Z_hlda(:,2),sz,train_label/num_classes,'filled')
 title('HLDA')
 grid on
 subplot(3,1,3)
-scatter(Z_flda(:,1),Z_flda(:,2),sz,train_label/num_classes,'filled')
+scatter(Z_lda(:,1),Z_lda(:,2),sz,train_label/num_classes,'filled')
 title('LDA')
 grid on
 

@@ -1,4 +1,4 @@
-function [para, Z] = mmda(X, labels, dim)
+function [para, Z] = mmda_sldr(X, labels, dim)
 
 % download CVX toolbox from below link:
 % http://web.cvxr.com/cvx/cvx-w64.zip
@@ -8,7 +8,7 @@ function [para, Z] = mmda(X, labels, dim)
 % "Max-min distance analysis by using sequential SDP relaxation for dimension reduction."
 % IEEE Transactions on Pattern Analysis and Machine Intelligence 33, no. 5 (2010): 1037-1050.
 
-%[para,W]=mmda(X, labels, dim) , where dim values by default is Number of classes: C
+%[para,W] = mmda_sldr(X, labels, dim) , where dim values by default is Number of classes: C
 % Input:
 %    X:      n x d matrix of original feature samples
 %            d --- dimensionality of original features
@@ -17,8 +17,8 @@ function [para, Z] = mmda(X, labels, dim)
 %    dim:    ----- dimensionality of reduced space (default:C)
 %            dim has to be from 1<=dim<=d
 % Output:
-%    para:   output structure of mmda model for input of test_ldr.m function
-%    Z:      n x dim matrix of dimensionality reduced samples
+%    para:   output structure of mmda model for input of test_sldr.m function
+%    Z:      n x dim matrix of dimensionality reduced features
 
 d = size(X,2);
 classes_labels = unique(labels);

@@ -1,5 +1,5 @@
 # SLDR
-A MATLAB toolbox for supervised linear dimension reduction (SLDR) including FLDA, HFLDA and MMDA
+A MATLAB toolbox for supervised linear dimension reduction (SLDR) including LDA, HLDA and MMDA
 
 Codes for the following papers:
 
@@ -12,8 +12,8 @@ This package includes the prototype MATLAB codes for supervised linear dimension
 
 The implemented methodes include: 
 
-  1. Fisher linear discriminant analysis (FLDA)
-  2. Heteroscedastic extension of FLDA (HFLDA)       
+  1. Linear discriminant analysis (LDA)
+  2. Heteroscedastic extension of LDA (HLDA)       
   3. Max-min distance analysis (MMDA)  
      
 
