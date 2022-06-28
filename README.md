@@ -1,5 +1,5 @@
 # SLDR
-A MATLAB toolbox for supervised linear dimension reduction (SLDR)
+A MATLAB toolbox for supervised linear dimension reduction (SLDR) including FLDA, HFLDA and MMDA
 
 Codes for the following papers:
 
