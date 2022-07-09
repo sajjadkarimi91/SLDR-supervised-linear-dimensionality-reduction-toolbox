@@ -61,28 +61,34 @@ catch
     warning('WHMMDA was replaced with HLDA to continue this example')
 end
 
+lambda = 0.1;
+[para, Z_epls] = epls_sldr(train_data, train_label, dim, lambda);
+
 %% some EDA to analysis the results
 
 sz = 5;
 figure
-subplot(4,1,1)
+subplot(5,1,1)
 scatter(Z_whmmda(:,1),Z_whmmda(:,2),sz,train_label/num_classes,'filled')
 title('WHMMDA')
 grid on
-subplot(4,1,2)
+subplot(5,1,2)
 scatter(Z_mmda(:,1),Z_mmda(:,2),sz,train_label/num_classes,'filled')
 title('MMDA')
 grid on
-subplot(4,1,3)
+subplot(5,1,3)
 scatter(Z_hlda(:,1),Z_hlda(:,2),sz,train_label/num_classes,'filled')
 title('HLDA')
 grid on
-subplot(4,1,4)
+subplot(5,1,4)
 scatter(Z_lda(:,1),Z_lda(:,2),sz,train_label/num_classes,'filled')
 title('LDA')
 grid on
 
-
+subplot(5,1,5)
+scatter(Z_epls(:,1),Z_epls(:,2),sz,train_label/num_classes,'filled')
+title('EPLS')
+grid on
 
 
 
