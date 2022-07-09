@@ -30,6 +30,7 @@ The implemented methodes include:
 
 ## Usage:
 Run and check "demo_run_methods.m" and you'll see the below results
+
 Note: EPLS is a regression-based method, so its classification performance is poor
 
 ![results](/demo.jpg)
