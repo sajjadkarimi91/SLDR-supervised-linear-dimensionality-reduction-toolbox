@@ -61,7 +61,7 @@ catch
     warning('WHMMDA was replaced with HLDA to continue this example')
 end
 
-lambda = 0.1;
+lambda = 0.2;
 [para, Z_epls] = epls_sldr(train_data, train_label, dim, lambda);
 
 %% some EDA to analysis the results

@@ -38,45 +38,56 @@ end
 mb = mean(X,'omitnan');
 X = X - mb;
 
-
 [n ,d]= size(X);
-y = zeros(n*num_classes,1);
-Xk = zeros(n*num_classes,d);
 
-strt = 0;
-for k1 = 1:num_classes
-    for k2=k1+1:num_classes
+for k1 = 1:min(num_classes,dim)
+    strt = 0;
+    y{k1} = zeros(n*num_classes,1);
+    Xk{k1} = zeros(n*num_classes,d);
+
+    k2_vals = 1:num_classes;
+    k2_vals(k1)=[];
+    for k2 = k2_vals
         ind_pos = find(labels==classes_labels(k1));
         ind_neg = find(labels==classes_labels(k2));
         this_dur = length(ind_pos) + length(ind_neg);
 
-        Xk(strt+1:strt+this_dur,:) = X([ind_pos;ind_neg],:);
-        y(strt+1:strt+this_dur) = [ones(length(ind_pos),1);-ones(length(ind_neg),1)];
+        Xk{k1}(strt+1:strt+this_dur,:) = X([ind_pos;ind_neg],:);
+        y{k1}(strt+1:strt+this_dur) = [ones(length(ind_pos),1);-ones(length(ind_neg),1)];
         strt = strt + this_dur;
     end
+    y{k1} = y{k1}(1:strt);
+    Xk{k1} = Xk{k1}(1:strt,:);
+    y{k1} = y{k1}- mean(y{k1});
 end
 
-y = y(1:strt);
-Xk = Xk(1:strt,:);
-
-% Xk = X;
-% y = labels- mean(labels);
 
 W = zeros(d,dim);
-for k= 1:dim
+k=0;
+while k <= dim
 
-    % SB = Xk'*(y*y'+lambda*eye(n*num_classes))*Xk; % this form is memory unefficeint
-    SB = (Xk'*y)*(y'*Xk) + lambda*(Xk')*Xk;
+    for k1 = 1:min(num_classes,dim)
+        k=k+1;
+        if k>dim
+            break
+        end
 
-    % Perform eigendecomposition of Sb
-    [M1, eigen_vals] = eig(SB);
-    [~, ind] = sort(diag(eigen_vals), 'descend');
-    uk = M1(:,ind(1));
-    zk = Xk*uk;
-    Xk = Xk - zk*(uk');
-    y = y- ((y'*zk)/(zk'*zk)) *zk;
-    W(:,k) = uk;
+        Xkk =Xk{k1};
+        yk = y{k1};
 
+        % SB = Xk'*(y*y'+lambda*eye(n*num_classes))*Xk; % this form is memory unefficeint
+        SB = (Xkk'*yk)*(yk'*Xkk) + lambda*(Xkk')*Xkk;
+
+        % Perform eigendecomposition of Sb
+        [M1, eigen_vals] = eig(SB);
+        [~, ind] = sort(diag(eigen_vals), 'descend');
+        uk = M1(:,ind(1));
+        zk = Xkk*uk;
+        Xk{k1} = Xkk - zk*(uk');
+        y{k1} = yk- ((yk'*zk)/(zk'*zk)) *zk;
+        W(:,k) = uk;
+
+    end
 end
 
 % Z has the dimentional reduced data sample X.
