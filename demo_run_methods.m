@@ -61,8 +61,8 @@ catch
     warning('WHMMDA was replaced with HLDA to continue this example')
 end
 
-lambda = 0.2;
-[para, Z_epls] = epls_sldr(train_data, train_label, dim, lambda);
+
+[para, Z_plsda] = plsda_sldr(train_data, train_label, dim);% Partial least squares discriminant analysis (PLS‐DA)
 
 %% some EDA to analysis the results
 
@@ -86,8 +86,8 @@ title('LDA')
 grid on
 
 subplot(5,1,5)
-scatter(Z_epls(:,1),Z_epls(:,2),sz,train_label/num_classes,'filled')
-title('EPLS')
+scatter(Z_plsda(:,1),Z_plsda(:,2),sz,train_label/num_classes,'filled')
+title('PLSDA')
 grid on
 
 

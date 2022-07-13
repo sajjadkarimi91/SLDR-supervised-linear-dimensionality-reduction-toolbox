@@ -19,7 +19,7 @@ function [para, Z] = lda_sldr(X, labels, dim)
 %            n --- the number of samples
 %    labels: n --- dimensional vector of class labels
 %    dim:    ----- dimensionality of reduced space (default:C)
-%            dim has to be from 1<=dim<=d
+%            dim has to be from 1<=dim<=C-1
 % Output:
 %    para:   output structure of lda model for input of test_sldr.m function
 %    Z:      n x dim matrix of dimensionality reduced features
@@ -32,6 +32,10 @@ if(nargin==2)
     dim = num_classes-1;
 end
 
+if dim>=num_classes
+    dim = num_classes-1;
+    warning('dim was set to C-1')
+end
 
 
 % recentering original feature

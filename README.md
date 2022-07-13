@@ -7,7 +7,7 @@ Codes for the following papers:
 2. Heteroscedastic max-min distance analysis 
 3. Max-min distance analysis by using sequential SDP relaxation for dimension reduction 
 4. Linear dimensionality reduction via a heteroscedastic extension of LDA: the Chernoff criterion
-5. Supervised Linear Dimension-Reduction Methods: Review, Extensions, and Comparisons
+5. Multiclass partial least squares discriminant analysis: Taking the right way—A critical tutorial
 
 ## 1. Introduction.
 
@@ -19,7 +19,7 @@ The implemented methodes include:
   2. Heteroscedastic extension of LDA (HLDA)       
   3. Max-min distance analysis (MMDA) 
   4. Heteroscedastic extension of MMDA (WHMMDA) 
-  5. Extended partial least squares (EPLS)  
+  5. Partial least squares discriminant analysis (PLS‐DA) 
      
 
 
@@ -29,8 +29,7 @@ The implemented methodes include:
      CVX MATLAB toolbox form http://web.cvxr.com/cvx/cvx-w64.zip
 
 ## Usage:
-Run and check "demo_run_methods.m" and you'll see the below results
+Run and check "demo_run_methods.m" and you'll see the below results for all methods
 
-Note: EPLS is a regression-based method, so its classification performance is poor
 
 ![results](/demo.jpg)
