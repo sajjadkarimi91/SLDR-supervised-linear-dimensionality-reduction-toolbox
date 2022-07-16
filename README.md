@@ -8,6 +8,7 @@ Codes for the following papers:
 3. Max-min distance analysis by using sequential SDP relaxation for dimension reduction 
 4. Linear dimensionality reduction via a heteroscedastic extension of LDA: the Chernoff criterion
 5. Multiclass partial least squares discriminant analysis: Taking the right way—A critical tutorial
+6. Stochastic discriminant analysis for linear supervised dimension reduction
 
 ## 1. Introduction.
 
@@ -20,6 +21,7 @@ The implemented methodes include:
   3. Max-min distance analysis (MMDA) 
   4. Heteroscedastic extension of MMDA (WHMMDA) 
   5. Partial least squares discriminant analysis (PLS‐DA) 
+  6. Stochastic discriminant analysis (SDA) 
      
 
 

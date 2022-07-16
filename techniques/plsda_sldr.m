@@ -15,12 +15,11 @@ function [para, Z] = plsda_sldr(X, labels, dim)
 %            d --- dimensionality of original features
 %            n --- the number of samples
 %    labels: n --- dimensional vector of class labels
-%    dim:    ----- dimensionality of reduced space (default:C)
+%    dim:    ----- dimensionality of reduced space (default:C-1)
 %            dim has to be from 1<=dim<=C-1
-%    lambda:  0 is equivalent to PLS and +inf is PCA
 % Output:
-%    para:   output structure of lda model for input of test_sldr.m function
-%    Z:      n x dim matrix of dimensionality reduced features
+%    para:   output structure of PLS‐DA model for input of test_sldr.m function
+%    Z:      (n x dim) matrix of dimensionality reduced features
 
 [n ,d]= size(X);
 classes_labels = unique(labels);
