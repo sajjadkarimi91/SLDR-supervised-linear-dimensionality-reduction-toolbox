@@ -29,6 +29,16 @@ end
 mb = mean(X,'omitnan');
 X = X - mb;
 
+[coeff, score, ~, ~, ~, mu] = pca(yhat,'NumComponents',dim);
+
+
+% Z = (yhat-mu)*coeff;
+lamda = 0.01;
+delta_error = 0.0001;
+eps_val = 10^-15;
+
+W = coeff;
+
 Sw = 0;
 SB = 0;
 for k = 1:num_classes
@@ -66,6 +76,8 @@ for i=1:num_classes
             +1/(p_i*p_j)*(logm(wSijw)-p_i*logm(wSiw)-p_j*logm(wSjw)))*Sw_sqrt;
     end
 end
+
+% Gradient-based minimization for stochastic discrimi- nant analysis (SDA).
 
 % selecting dim eigenvectors associated with the dim largest eigenvalues
 [V,D] = eig(S_chernoff);
