@@ -1,7 +1,7 @@
-function [para, Z] = sda_sldr(X, labels, dim)
+function [para, Z] = sda_sldr(X, labels, dim, lamda_in)
 
 % Stochastic discriminant analysis (SDA) matches similarities between points in the projection space with those in a response space
-% Juuti, Mika, Francesco Corona, and Juha Karhunen. 
+% Juuti, Mika, Francesco Corona, and Juha Karhunen.
 % Stochastic discriminant analysis for linear supervised dimension reduction.
 % Neurocomputing 291 (2018): 136-150.
 
@@ -21,63 +21,42 @@ function [para, Z] = sda_sldr(X, labels, dim)
 classes_labels = unique(labels);
 num_classes = length(classes_labels);
 
+global dummy_labels X_org count_itr lamda
+
+count_itr=0;
+
+dummy_labels = zeros(n,num_classes);
+for k = 1:num_classes
+    dummy_labels(labels ==classes_labels(k),k) = 1;
+end
+
 if(nargin==2)
     dim= min(num_classes,max(1,size(X,2)-1));
+end
+
+if nargin<4
+    lamda = 0.01;
+else
+    lamda = lamda_in;
 end
 
 % recentering original feature
 mb = mean(X,'omitnan');
 X = X - mb;
+X_org = X;
 
-[coeff, score, ~, ~, ~, mu] = pca(yhat,'NumComponents',dim);
-
-
+[coeff, score, ~, ~, ~, mu] = pca(X,'NumComponents',dim);
 % Z = (yhat-mu)*coeff;
-lamda = 0.01;
-delta_error = 0.0001;
-eps_val = 10^-15;
+
 
 W = coeff;
+x0 = W(:); % vectorize matrix
 
-Sw = 0;
-SB = 0;
-for k = 1:num_classes
+options = optimoptions('fminunc','MaxFunctionEvaluations',5*10^2,'Algorithm','trust-region','SpecifyObjectiveGradient',true);
+% options = optimoptions('fmincon','MaxFunctionEvaluations',5*10^4,'SpecifyObjectiveGradient',true,'StepTolerance',10^-8,'ConstraintTolerance',10^-8);
 
-    Si{k}= cov( X(labels==classes_labels(k),:) ,1, 'omitrows' );
-    M(k,:) = mean(X(labels==classes_labels(k),:),'omitnan');
-    p(k) = sum(labels==classes_labels(k))/length(labels);
-    Sw = Sw + p(k)*Si{k};
-    SB = SB + p(k)*M(k,:)' * M(k,:);
+W = fminunc(@sda_cost,x0,options);
 
-end
-
-Sw_inv = inv(Sw);
-Sw_sqrt = (Sw)^0.5;
-Sw_sqrtinv = inv(Sw_sqrt);
-
-S_chernoff = 0;
-
-for i=1:num_classes
-    for j=i+1:num_classes
-        p_i = p(i)/(p(i)+p(j));
-        p_j = p(j)/(p(i)+p(j));
-
-        m_i = M(i,:)';
-        m_j = M(j,:)';
-
-        Sij = p_i*Si{i} + p_j*Si{j};
-        wSijw = Sw_sqrtinv*Sij*Sw_sqrtinv;
-        wSiw = Sw_sqrtinv*Si{i}*Sw_sqrtinv;
-        wSjw = Sw_sqrtinv*Si{j}*Sw_sqrtinv;
-
-        S_chernoff = S_chernoff + p(i)*p(j)*Sw_inv*Sw_sqrt*(wSijw^-0.5...
-            *Sw_sqrtinv*(m_i-m_j)*(m_i-m_j)'...
-            *Sw_sqrtinv*wSijw^-0.5...
-            +1/(p_i*p_j)*(logm(wSijw)-p_i*logm(wSiw)-p_j*logm(wSjw)))*Sw_sqrt;
-    end
-end
-
-% Gradient-based minimization for stochastic discrimi- nant analysis (SDA).
 
 % selecting dim eigenvectors associated with the dim largest eigenvalues
 [V,D] = eig(S_chernoff);
@@ -92,6 +71,20 @@ Z = X*W;
 
 para.W = W;
 para.mb = mb;
-para.model = 'hflda';
+para.model = 'sda';
 
 end
+
+function [f, g] = sda_cost(w_vec)
+
+global dummy_labels X_org count_itr lamda
+count_itr = count_itr+1;
+
+% w_enb = 0.000001;
+% w_dr = 0.00001;
+sn0 = 0.001;
+h_sl0 = sn0;
+h_fee = 0.00005;
+
+end
+

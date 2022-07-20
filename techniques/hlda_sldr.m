@@ -80,6 +80,6 @@ Z = X*W;
 
 para.W = W;
 para.mb = mb;
-para.model = 'hflda';
+para.model = 'hlda';
 
 end
