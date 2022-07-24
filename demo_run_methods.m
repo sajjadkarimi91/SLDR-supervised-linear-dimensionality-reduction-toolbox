@@ -61,31 +61,40 @@ catch
     warning('WHMMDA was replaced with HLDA to continue this example')
 end
 
+[para_plsda, Z_plsda] = plsda_sldr(train_data, train_label, dim);% Partial least squares discriminant analysis (PLS‐DA)
 
-[para, Z_plsda] = plsda_sldr(train_data, train_label, dim);% Partial least squares discriminant analysis (PLS‐DA)
+[para_sda, Z_sda] = sda_sldr(train_data, train_label, dim); % Stochastic discriminant analysis (SDA)
 
 %% some EDA to analysis the results
 
 sz = 5;
 figure
-subplot(5,1,1)
+subplot(6,1,1)
+scatter(Z_sda(:,1),Z_sda(:,2),sz,train_label/num_classes,'filled')
+title('SDA')
+grid on
+
+subplot(6,1,2)
 scatter(Z_whmmda(:,1),Z_whmmda(:,2),sz,train_label/num_classes,'filled')
 title('WHMMDA')
 grid on
-subplot(5,1,2)
+
+subplot(6,1,3)
 scatter(Z_mmda(:,1),Z_mmda(:,2),sz,train_label/num_classes,'filled')
 title('MMDA')
 grid on
-subplot(5,1,3)
+
+subplot(6,1,4)
 scatter(Z_hlda(:,1),Z_hlda(:,2),sz,train_label/num_classes,'filled')
 title('HLDA')
 grid on
-subplot(5,1,4)
+
+subplot(6,1,5)
 scatter(Z_lda(:,1),Z_lda(:,2),sz,train_label/num_classes,'filled')
 title('LDA')
 grid on
 
-subplot(5,1,5)
+subplot(6,1,6)
 scatter(Z_plsda(:,1),Z_plsda(:,2),sz,train_label/num_classes,'filled')
 title('PLSDA')
 grid on
