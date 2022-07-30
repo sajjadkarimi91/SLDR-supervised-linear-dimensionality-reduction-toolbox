@@ -47,7 +47,7 @@ end
 
 
 Sw_sqrt = (Sw)^0.5;
-Sw_sqrtinv = inv(Sw_sqrt);
+Sw_sqrtinv = (real(inv(Sw_sqrt))+real(inv(Sw_sqrt))')/2;
 
 % apply the whitening preprocessing
 % X = (Sw_sqrtinv * X' )'; % both are equivalent

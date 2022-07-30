@@ -51,7 +51,7 @@ for k = 1:num_classes
 end
 
 Sw_inv = inv(Sw);
-Sw_sqrt = (Sw)^0.5;
+Sw_sqrt = (real((Sw)^0.5)+real((Sw)^0.5)')/2;
 Sw_sqrtinv = inv(Sw_sqrt);
 
 % apply the whitening preprocessing
