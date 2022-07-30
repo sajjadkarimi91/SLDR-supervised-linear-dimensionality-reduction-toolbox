@@ -14,7 +14,7 @@ Codes for the following papers:
 
 This package includes the prototype MATLAB codes for supervised linear dimension reduction (SLDR).
 
-The implemented methodes include: 
+The implemented methods include: 
 
   1. Linear discriminant analysis (LDA)
   2. Heteroscedastic extension of LDA (HLDA)       
