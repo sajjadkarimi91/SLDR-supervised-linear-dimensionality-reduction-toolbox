@@ -56,16 +56,4 @@ lamda_range(lamda_range<lambda_min)=[];
 f=f/sum(f) * length(lambda)/length(lamda_range);
 
 
-% Results
-% figure;
-% h = bar(lambda_h,f);
-% set(h,'FaceColor',[.75 .75 .8]);
-% set(h,'LineWidth',0.25);
-% xlabel('Eigenvalue \lambda','FontWeight','bold','FontSize',10);
-% ylabel(' Probability Density Function f(\lambda)','FontWeight','bold','FontSize',10);
-% title([' Marchenko Pastur distribution - ', num2str(mean_ind), ' days mean'],'FontWeight','bold','FontSize',14,'Interpreter','latex');
-% hold on;
-% plot(space_lambda,pdf_vals,'g','LineWidth',2);
-% grid on;
-% hold off;
 
