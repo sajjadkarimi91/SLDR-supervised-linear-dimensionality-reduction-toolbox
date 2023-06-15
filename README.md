@@ -1,6 +1,5 @@
 # SLDR
 A MATLAB toolbox for supervised linear dimension reduction (SLDR) including LDA, HLDA, MMDA, WHMMDA, PLS-DA, and SDA
-Note: To avoid matrix singularity in computations, we employ Marchenko–Pastur for denoising covariance matrices.
 
 Codes for the following papers were implemented:
 
@@ -10,6 +9,9 @@ Codes for the following papers were implemented:
 4. Linear dimensionality reduction via a heteroscedastic extension of LDA: the Chernoff criterion (HLDA)
 5. Multiclass partial least squares discriminant analysis: Taking the right way—A critical tutorial (PLS-DA)
 6. Stochastic discriminant analysis for linear supervised dimension reduction (SDA)
+
+## Note: 
+To avoid matrix singularity in computations, we employ Marchenko–Pastur for denoising covariance matrices.
 
 ## 1. Introduction.
 
