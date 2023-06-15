@@ -25,10 +25,10 @@ function [para, Z] = plsda_sldr(X, labels, dim)
 classes_labels = unique(labels);
 num_classes = length(classes_labels);
 
-dummy_labels = zeros(n,num_classes);
+onehat_labels = zeros(n,num_classes);
 
 for k = 1:num_classes
-    dummy_labels(labels ==classes_labels(k),k) = 1;
+    onehat_labels(labels ==classes_labels(k),k) = 1;
 end
 
 if(nargin==2)
@@ -37,7 +37,7 @@ end
 
 if dim>=num_classes
     dim = num_classes-1;
-    warning('dim was set to C-1')
+    warning('PLS-DA: dim was set to C-1')
 end
 
 % recentering original feature
@@ -45,9 +45,11 @@ mb = mean(X,'omitnan');
 X = X - mb;
 
 ncomp = min(3*dim,d);
-[~,~,~,~,beta_coef] = plsregress(X,dummy_labels,ncomp);
+[~,~,~,~,beta_coef] = plsregress(X,onehat_labels,ncomp);
 
 yhat = [ones(n,1) X]*beta_coef;
+% Columns of X are linearly dependent
+yhat = yhat(:,1:end-1);
 
 [coeff, score, ~, ~, ~, mu] = pca(yhat,'NumComponents',dim);
 

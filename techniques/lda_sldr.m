@@ -34,7 +34,7 @@ end
 
 if dim>=num_classes
     dim = num_classes-1;
-    warning('dim was set to C-1')
+    warning('LDA: dim was set to C-1')
 end
 
 
@@ -47,7 +47,7 @@ SB = 0;
 for k = 1:num_classes
 
     %Si{k}= cov( X(labels==classes_labels(k),:) ,1, 'omitrows' );
-    Si{k}= marchenko_pastur( X(labels==classes_labels(k),:));
+    Si{k}= marchenko_pastur( X(labels==classes_labels(k),:)); % To avoid matrix singularity in computations, we employ Marchenko–Pastur for denoising covariance matrices.
     M(k,:) = mean(X(labels==classes_labels(k),:),'omitnan');
     p(k) = sum(labels==classes_labels(k))/length(labels);
     Sw = Sw + p(k)*Si{k};

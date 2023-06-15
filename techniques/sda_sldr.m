@@ -75,7 +75,7 @@ options = optimoptions('fminunc','MaxFunctionEvaluations',5*10^2,'Algorithm','qu
 W = fminunc(@sda_cost,x0,options);
 W = reshape(W,d,[]);
 % Orthogonalize W t using thin singular value decomposition
-[U,S,V] = svd(W);
+[U,S,~] = svd(W);
 W =  U*S;
 
 
