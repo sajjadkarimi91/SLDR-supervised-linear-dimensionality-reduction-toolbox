@@ -46,14 +46,14 @@ end
 
 %% dimension reduction with LDA, HLDA, MMDA, WHMMDA, PLS-DA, and SDA
 
-disp('LDA method')
+disp('1- LDA method')
 [para_lda, Z_lda] = lda_sldr(train_data, train_label, dim); % Linear discriminant analysis (LDA)
 
-disp('HLDA method')
+disp('2- HLDA method')
 [para_hlda, Z_hlda] = hlda_sldr(train_data, train_label, dim); % Heteroscedastic extension of LDA
 
 try
-    disp('MMDA method')
+    disp('3- MMDA method')
     [para_mmda, Z_mmda] = mmda_sldr(train_data, train_label, dim); % Max-min distance analysis (MMDA)
 catch
     warning('please add cvx for MMDA')
@@ -63,7 +63,7 @@ catch
 end
 
 try
-    disp('WHMMDA method')
+    disp('4- WHMMDA method')
     [para_mmda, Z_mmda] = mmda_sldr(train_data, train_label, dim); % Max-min distance analysis (MMDA)
     [para_mmda, Z_whmmda] = whmmda_sldr(train_data, train_label, dim); % Heteroscedastic extension of MMDA
 catch
@@ -72,10 +72,10 @@ catch
     warning('WHMMDA was replaced with HLDA to continue this example')
 end
 
-disp('PLS-DA method')
+disp('5- PLS-DA method')
 [para_plsda, Z_plsda] = plsda_sldr(train_data, train_label, dim);% Partial least squares discriminant analysis (PLS‐DA)
 
-disp('SDA method, This method is slowest method')
+disp('6- SDA method, This method is the slowest method')
 [para_sda, Z_sda] = sda_sldr(train_data, train_label, dim); % Stochastic discriminant analysis (SDA)
 
 %% some EDA to analysis the results
