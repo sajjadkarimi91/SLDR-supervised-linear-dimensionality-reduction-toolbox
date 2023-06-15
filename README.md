@@ -28,8 +28,8 @@ The implemented methods include:
 ## 2. Usage & Dependency.
 
 ## Dependency:
-     If you want to use MMDA or WHMMDA
-     CVX MATLAB toolbox form http://web.cvxr.com/cvx/cvx-w64.zip
+     If you want to use MMDA or WHMMDA, you should download the following zip file & extract it in the "cvx-toolbox" or current directory
+     CVX MATLAB toolbox for Windows can be downloaded from [website](http://web.cvxr.com/cvx/cvx-w64.zip)
 
 ## Usage:
 Run and check "demo_run_methods.m" and you'll see the below results for all methods
